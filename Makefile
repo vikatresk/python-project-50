@@ -12,3 +12,6 @@ package-install:
 
 package-uninstall:
 	python3 -m pip uninstall --yes dist/*.whl
+
+lint:
+	poetry run flake8 gendiff
