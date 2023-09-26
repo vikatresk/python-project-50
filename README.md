@@ -7,5 +7,10 @@
 
 [![Actions Status](https://github.com/vikatresk/python-project-50/workflows/CI/badge.svg)](https://github.com/vikatresk/python-project-50/actions)
 
+## Description
+
+Gendiff (GENerator of DIFFerences) - a program defining the difference between two data structures (JSON and/or YAML) 
+and generating new structure containing details of this differance (including unchanged).
+
 Generate difference between two .json files
 [![asciicast](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI.svg)](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI)
