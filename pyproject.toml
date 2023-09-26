@@ -1,16 +1,22 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "A project package to determine and show the difference between two data structures"
 authors = ["Victoria Treskova <vikatresk@yandex.ru>"]
 readme = "README.md"
-packages = [{include = "gendiff"}]
+packages = [
+    {include = "gendiff"},
+    ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.1"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.1.0"
+pytest = "^7.4.2"
 
 [build-system]
 requires = ["poetry-core"]
