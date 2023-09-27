@@ -11,3 +11,6 @@ and generating new structure containing details of this differance (including un
 
 Generate difference between two .json files
 [![asciicast](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI.svg)](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI)
+
+Generate difference between .yaml and .yml files
+[![asciicast](https://asciinema.org/a/S1iIZ4cvqBaaxuLz0FPqNr4xE.svg)](https://asciinema.org/a/S1iIZ4cvqBaaxuLz0FPqNr4xE)
