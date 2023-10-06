@@ -1,19 +1,10 @@
 from gendiff.parse_data import load_file
+from gendiff.get_format import apply_format
+from gendiff.build_diff import compare_dicts
 
 
-def generate_diff(first_file, second_file):
-    file1 = load_file(first_file)
-    file2 = load_file(second_file)
-    keys = sorted(set(file1.keys() | set(file2.keys())))
-    result = ''
-    for key in keys:
-        if file1.get(key) is None:
-            result += f"+ {key}: {file2[key]}\n"
-        elif file1.get(key) is not None and file2.get(key) is None:
-            result += f"- {key}: {file1[key]}\n"
-        elif file1.get(key) == file2.get(key):
-            result += f"  {key}: {file1[key]}\n"
-        else:
-            result += f"- {key}: {file1[key]}\n+ {key}: {file2[key]}\n"
-    diff = result.strip().lower()
-    return "{\n" + diff + "\n}"
+def generate_diff(first_file, second_file, formatter='stylish'):
+    dict1 = load_file(first_file)
+    dict2 = load_file(second_file)
+    diff = compare_dicts(dict1, dict2)
+    return apply_format(diff, dict1, dict2, formatter)
