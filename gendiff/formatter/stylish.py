@@ -1,45 +1,109 @@
-import itertools
+INDENT_COUNT = 4
+REPLACER = ' '
 
 
-def fixing_values(value):
-    if value is None:
-        return 'null'
-    elif value is True:
-        return 'true'
-    elif value is False:
-        return 'false'
-    else:
-        return value
+def make_stylish(data):
+    return make_diff(data, depth=1)
 
 
-def make_stylish(keys, diff):
+def make_diff(current_data, depth):
+    if not isinstance(current_data, (list, dict)):
+        return str(current_data)
+    lines = make_lines(current_data, depth)
+    return '\n'.join(lines)
 
-    def walk(children, parents, value, marked_by):
-        if children == '':
-            return f"{fixing_values(value)}"
-        else:
-            children.sort()
-            lines = []
-            for key in children:
-                for elem in diff:
-                    if elem['key'] == key and elem['parents'] == parents:
-                        if marked_by != '':
-                            indent = f"{(elem['depth'] * 4) * ' '}"
-                        elif elem['status'] == 'removed':
-                            indent = f"{(elem['depth'] * 4 - 2) * ' '}- "
-                        elif elem['status'] == 'added':
-                            indent = f"{(elem['depth'] * 4 - 2) * ' '}+ "
-                        else:
-                            indent = f"{(elem['depth'] * 4) * ' '}"
-                        if elem['type'] == 'dict' \
-                                and (elem['status'] == 'added'
-                                     or elem['status'] == 'removed') \
-                                and marked_by == '':
-                            marked_by = elem['key']
-                        lines.append(f"{indent}{elem['key']}: {walk(elem['children'], elem['parents'] + '.' + elem['key'], elem['value'], marked_by)}") # noqa
-                        if marked_by == elem['key']:
-                            marked_by = ''
-                        result = itertools.chain(
-                            '{', lines, [(elem['depth'] - 1) * 4 * ' ' + '}'])
-            return '\n'.join(result)
-    return walk(keys, '', '', '')
+
+def make_lines(current_data, depth):
+    indent = REPLACER * INDENT_COUNT * depth
+    closing_indent = REPLACER * INDENT_COUNT * (depth - 1)
+    lines = []
+
+    if isinstance(current_data, dict):
+        for k, v in current_data.items():
+            lines.append(f'{indent}{k}: {make_diff(v, depth=depth + 1)}')
+    for diff in current_data:
+        add_lines(diff, depth, lines)
+
+    result = ['{'] + lines + [closing_indent + '}']
+    return result
+
+
+def add_lines(diff, depth, lines):
+    status = get_status(diff)
+    if status == 'deleted':
+        add_deleted(diff, depth, lines)
+    elif status == 'added':
+        add_added(diff, depth, lines)
+    elif status == 'unchanged':
+        add_unchanged(diff, depth, lines)
+    elif status == 'changed':
+        add_changed(diff, depth, lines)
+    elif status == 'parent':
+        add_parent(diff, depth, lines)
+    return lines
+
+
+def add_deleted(diff, depth, lines):
+    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+    value = normalize_value(diff['value'])
+    key = '- ' + diff['key']
+    lines.append(
+        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+    )
+
+
+def add_added(diff, depth, lines):
+    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+    value = normalize_value(diff['value'])
+    key = '+ ' + diff['key']
+    lines.append(
+        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+    )
+
+
+def add_unchanged(diff, depth, lines):
+    indent = REPLACER * INDENT_COUNT * depth
+    value = normalize_value(diff['value'])
+    key = diff['key']
+    lines.append(
+        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+    )
+
+
+def add_changed(diff, depth, lines):
+    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+    value1 = normalize_value(diff['value1'])
+    value2 = normalize_value(diff['value2'])
+    key1 = '- ' + diff['key']
+    key2 = '+ ' + diff['key']
+    lines.append(
+        f'{indent}{key1}: {make_diff(value1, depth=depth + 1)}'
+    )
+    lines.append(
+        f'{indent}{key2}: {make_diff(value2, depth=depth + 1)}'
+    )
+
+
+def add_parent(diff, depth, lines):
+    indent = REPLACER * INDENT_COUNT * depth
+    children = normalize_value(diff['children'])
+    key = diff['key']
+    lines.append(
+        f'{indent}{key}: {make_diff(children, depth=depth + 1)}'
+    )
+
+
+def get_status(diff):
+    if 'status' in diff:
+        return diff['status']
+
+
+def normalize_value(value):
+    if value in (False, True):
+        value = str(value).lower()
+    elif value is None:
+        value = 'null'
+    elif isinstance(value, dict):
+        for v in value.values():
+            v = normalize_value(v)
+    return value
