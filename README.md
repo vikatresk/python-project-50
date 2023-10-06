@@ -7,8 +7,16 @@
 ## Description
 
 Gendiff (GENerator of DIFFerences) - a program defining the difference between two data structures (JSON and/or YAML) 
-and generating new structure containing details of this differance (including unchanged).
+and generating new structure containing details of this difference (including unchanged) in three available formats:
+ - stylish (default)
+ - plain
+ - json
 
+#### Clone this for a quick start:
+```git clone https://github.com/vikatresk/python-project-50.git```
+
+
+#### Work examples:
 Generate difference between two .json files
 [![asciicast](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI.svg)](https://asciinema.org/a/eFSodK59hOFCUDaZ6YV5xAqxI)
 
@@ -20,3 +28,6 @@ Generate difference between two nested files in stylish format
 
 Generate difference between two nested files in plain format
 [![asciicast](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG.svg)](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG)
+
+Generate difference between two nested files in json format
+https://asciinema.org/a/z5lvQ6umHlyXnxSsL8yuJKvKp

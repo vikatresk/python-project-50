@@ -8,8 +8,8 @@ def main():
     args = get_parser()
     first_file = args.first_file
     second_file = args.second_file
-    format = args.format
-    difference = generate_diff(first_file, second_file, format)
+    formatter = args.format
+    difference = generate_diff(first_file, second_file, formatter)
     print(difference)
 
 

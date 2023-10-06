@@ -44,3 +44,12 @@ def test_nested_plain():
         expected = file.read()
         diff = generate_diff(file1, file2, 'plain')
         assert expected == diff
+
+
+def test_nested_in_json_format():
+    file1 = "./tests/fixtures/input/nested1.yaml"
+    file2 = "./tests/fixtures/input/nested2.yml"
+    with open("./tests/fixtures/output/json_result_nested.txt") as file:
+        expected = file.read()
+        diff = generate_diff(file1, file2, 'json')
+        assert expected == diff
