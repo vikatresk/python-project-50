@@ -38,7 +38,7 @@ def test_nested_yml_stylish():
 
 
 def test_nested_plain():
-    file1 = "./tests/fixtures/input/nested1.yaml"
+    file1 = "./tests/fixtures/input/nested1.yml"
     file2 = "./tests/fixtures/input/nested2.yml"
     with open("./tests/fixtures/output/plain_result_nested.txt") as file:
         expected = file.read()
@@ -47,7 +47,7 @@ def test_nested_plain():
 
 
 def test_nested_in_json_format():
-    file1 = "./tests/fixtures/input/nested1.yaml"
+    file1 = "./tests/fixtures/input/nested1.yml"
     file2 = "./tests/fixtures/input/nested2.yml"
     with open("./tests/fixtures/output/json_result_nested.txt") as file:
         expected = file.read()
