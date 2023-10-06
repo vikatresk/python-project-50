@@ -35,3 +35,12 @@ def test_nested_yml_stylish():
         expected = file.read()
         diff = generate_diff(file1, file2)
         assert expected == diff
+
+
+def test_nested_plain():
+    file1 = "./tests/fixtures/input/nested1.yaml"
+    file2 = "./tests/fixtures/input/nested2.yml"
+    with open("./tests/fixtures/output/plain_result_nested.txt") as file:
+        expected = file.read()
+        diff = generate_diff(file1, file2, 'plain')
+        assert expected == diff

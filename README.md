@@ -14,3 +14,9 @@ Generate difference between two .json files
 
 Generate difference between .yaml and .yml files
 [![asciicast](https://asciinema.org/a/S1iIZ4cvqBaaxuLz0FPqNr4xE.svg)](https://asciinema.org/a/S1iIZ4cvqBaaxuLz0FPqNr4xE)
+
+Generate difference between two nested files in stylish format
+[![asciicast](https://asciinema.org/a/GHDsbIpS88q94JvRNxAWwWe3N.svg)](https://asciinema.org/a/GHDsbIpS88q94JvRNxAWwWe3N)
+
+Generate difference between two nested files in plain format
+[![asciicast](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG.svg)](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG)
