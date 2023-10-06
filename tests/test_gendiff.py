@@ -11,9 +11,9 @@ def test_json_flat_diff():
 
 
 def test_yml_flat_diff():
-    file1 = './tests/fixtures/input/flat1.yaml'
+    file1 = './tests/fixtures/input/flat1.yml'
     file2 = './tests/fixtures/input/flat2.yml'
-    with open('./tests/fixtures/output/result_flat_yaml.txt') as file:
+    with open('./tests/fixtures/output/result_flat_yml.txt') as file:
         expected = file.read()
         diff = generate_diff(file1, file2)
         assert expected == diff
@@ -22,14 +22,14 @@ def test_yml_flat_diff():
 def test_both_flat_diff():
     file1 = './tests/fixtures/input/flat1.json'
     file2 = './tests/fixtures/input/flat2.yml'
-    with open('./tests/fixtures/output/result_flat_yaml.txt') as file:
+    with open('./tests/fixtures/output/result_flat_yml.txt') as file:
         expected = file.read()
         diff = generate_diff(file1, file2)
         assert expected == diff
 
 
 def test_nested_yml_stylish():
-    file1 = "./tests/fixtures/input/nested1.yaml"
+    file1 = "./tests/fixtures/input/nested1.yml"
     file2 = "./tests/fixtures/input/nested2.yml"
     with open("./tests/fixtures/output/stylish_result_nested.txt") as file:
         expected = file.read()
