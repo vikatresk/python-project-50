@@ -1,5 +1,5 @@
 from gendiff.parse_data import load_file
-from gendiff.get_format import apply_format
+from gendiff.formatter.get_format import apply_format
 from gendiff.build_diff import compare_dicts
 
 

@@ -10,13 +10,13 @@ def make_diff(current_data, path=''):
         if status == 'deleted':
             lines.append(f"Property '{path}{key}' was removed")
         elif status == 'added':
-            value = normalize_value(diff['value'])
+            value = to_str(diff['value'])
             lines.append(
                 f"Property '{path}{key}' was added with value: {value}"
             )
         elif status == 'changed':
-            value1 = normalize_value(diff['value1'])
-            value2 = normalize_value(diff['value2'])
+            value1 = to_str(diff['value1'])
+            value2 = to_str(diff['value2'])
             lines.append(
                 f"Property '{path}{key}' was updated. From {value1} to {value2}"
             )
@@ -27,7 +27,7 @@ def make_diff(current_data, path=''):
     return result
 
 
-def normalize_value(value):
+def to_str(value):
     if isinstance(value, dict):
         value = '[complex value]'
     elif value in (False, True):

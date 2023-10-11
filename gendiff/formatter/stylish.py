@@ -31,66 +31,46 @@ def make_lines(current_data, depth):
 def add_lines(diff, depth, lines):
     status = get_status(diff)
     if status == 'deleted':
-        add_deleted(diff, depth, lines)
+        indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+        value = to_str(diff['value'])
+        key = '- ' + diff['key']
+        lines.append(
+            f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+        )
     elif status == 'added':
-        add_added(diff, depth, lines)
+        indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+        value = to_str(diff['value'])
+        key = '+ ' + diff['key']
+        lines.append(
+            f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+        )
     elif status == 'unchanged':
-        add_unchanged(diff, depth, lines)
+        indent = REPLACER * INDENT_COUNT * depth
+        value = to_str(diff['value'])
+        key = diff['key']
+        lines.append(
+            f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
+        )
     elif status == 'changed':
-        add_changed(diff, depth, lines)
+        indent = REPLACER * ((INDENT_COUNT * depth) - 2)
+        value1 = to_str(diff['value1'])
+        value2 = to_str(diff['value2'])
+        key1 = '- ' + diff['key']
+        key2 = '+ ' + diff['key']
+        lines.append(
+            f'{indent}{key1}: {make_diff(value1, depth=depth + 1)}'
+        )
+        lines.append(
+            f'{indent}{key2}: {make_diff(value2, depth=depth + 1)}'
+        )
     elif status == 'parent':
-        add_parent(diff, depth, lines)
+        indent = REPLACER * INDENT_COUNT * depth
+        children = to_str(diff['children'])
+        key = diff['key']
+        lines.append(
+            f'{indent}{key}: {make_diff(children, depth=depth + 1)}'
+        )
     return lines
-
-
-def add_deleted(diff, depth, lines):
-    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
-    value = normalize_value(diff['value'])
-    key = '- ' + diff['key']
-    lines.append(
-        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
-    )
-
-
-def add_added(diff, depth, lines):
-    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
-    value = normalize_value(diff['value'])
-    key = '+ ' + diff['key']
-    lines.append(
-        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
-    )
-
-
-def add_unchanged(diff, depth, lines):
-    indent = REPLACER * INDENT_COUNT * depth
-    value = normalize_value(diff['value'])
-    key = diff['key']
-    lines.append(
-        f'{indent}{key}: {make_diff(value, depth=depth + 1)}'
-    )
-
-
-def add_changed(diff, depth, lines):
-    indent = REPLACER * ((INDENT_COUNT * depth) - 2)
-    value1 = normalize_value(diff['value1'])
-    value2 = normalize_value(diff['value2'])
-    key1 = '- ' + diff['key']
-    key2 = '+ ' + diff['key']
-    lines.append(
-        f'{indent}{key1}: {make_diff(value1, depth=depth + 1)}'
-    )
-    lines.append(
-        f'{indent}{key2}: {make_diff(value2, depth=depth + 1)}'
-    )
-
-
-def add_parent(diff, depth, lines):
-    indent = REPLACER * INDENT_COUNT * depth
-    children = normalize_value(diff['children'])
-    key = diff['key']
-    lines.append(
-        f'{indent}{key}: {make_diff(children, depth=depth + 1)}'
-    )
 
 
 def get_status(diff):
@@ -98,12 +78,12 @@ def get_status(diff):
         return diff['status']
 
 
-def normalize_value(value):
+def to_str(value):
     if value in (False, True):
         value = str(value).lower()
     elif value is None:
         value = 'null'
     elif isinstance(value, dict):
         for v in value.values():
-            v = normalize_value(v)
+            v = to_str(v)
     return value
