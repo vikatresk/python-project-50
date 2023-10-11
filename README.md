@@ -30,4 +30,4 @@ Generate difference between two nested files in plain format
 [![asciicast](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG.svg)](https://asciinema.org/a/Pyo4EIZOl0JJCHSkJJtOOEKvG)
 
 Generate difference between two nested files in json format
-https://asciinema.org/a/z5lvQ6umHlyXnxSsL8yuJKvKp
+[![asciicast](https://asciinema.org/a/z5lvQ6umHlyXnxSsL8yuJKvKp.svg)](https://asciinema.org/a/z5lvQ6umHlyXnxSsL8yuJKvKp)
