@@ -2,7 +2,7 @@
     {
         "status": "parent",
         "key": "common",
-        "children": [
+        "value": [
             {
                 "status": "added",
                 "key": "follow",
@@ -39,11 +39,11 @@
             {
                 "status": "parent",
                 "key": "setting6",
-                "children": [
+                "value": [
                     {
                         "status": "parent",
                         "key": "doge",
-                        "children": [
+                        "value": [
                             {
                                 "status": "changed",
                                 "key": "wow",
@@ -69,7 +69,7 @@
     {
         "status": "parent",
         "key": "group1",
-        "children": [
+        "value": [
             {
                 "status": "changed",
                 "key": "baz",

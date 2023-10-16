@@ -1,43 +1,38 @@
+import os.path
+from os.path import dirname, abspath
 import pytest
 from gendiff.gen_diff import generate_diff
 
 
-FLAT_JSON1 = './tests/fixtures/input/flat1.json'
-FLAT_JSON2 = './tests/fixtures/input/flat2.json'
-FLAT_YML1 = './tests/fixtures/input/flat1.yml'
-FLAT_YML2 = './tests/fixtures/input/flat2.yml'
-NESTED_JSON1 = './tests/fixtures/input/nested1.json'
-NESTED_JSON2 = './tests/fixtures/input/nested2.json'
-NESTED_YML1 = './tests/fixtures/input/nested1.yml'
-NESTED_YML2 = './tests/fixtures/input/nested2.yml'
+INPUT_PATH = os.path.join(f'{dirname(abspath(__file__))}', 'fixtures/input')
+OUTPUT_PATH = os.path.join(f'{dirname(abspath(__file__))}', 'fixtures/output')
 
-STYLISH_FORMAT_JSON = './tests/fixtures/output/stylish_format_json.txt'
-STYLISH_FORMAT_YML = './tests/fixtures/output/stylish_format_yml.txt'
-STYLISH_NESTED = './tests/fixtures/output/stylish_format_nested.txt'
-PLAIN_JSON = './tests/fixtures/output/plain_format_json.txt'
-PLAIN_YML = './tests/fixtures/output/plain_format_yml.txt'
-PLAIN_NESTED = './tests/fixtures/output/plain_format_nested.txt'
-JSON_FORMAT_JSON = './tests/fixtures/output/json_format_json.txt'
-JSON_FORMAT_YML = './tests/fixtures/output/json_format_yml.txt'
-JSON_FORMAT_NESTED = './tests/fixtures/output/json_format_nested.txt'
+
+def get_input_path(file):
+    return os.path.join(INPUT_PATH, file)
+
+
+def get_output_path(file):
+    return os.path.join(OUTPUT_PATH, file)
 
 
 @pytest.mark.parametrize('input1, input2, output, format_', [
-    (FLAT_JSON1, FLAT_JSON2, STYLISH_FORMAT_JSON, 'stylish'),
-    (FLAT_YML1, FLAT_YML2, STYLISH_FORMAT_YML, 'stylish'),
-    (NESTED_JSON1, NESTED_JSON2, STYLISH_NESTED, 'stylish'),
-    (NESTED_YML1, NESTED_YML2, STYLISH_NESTED, 'stylish'),
-    (FLAT_JSON1, FLAT_JSON2, PLAIN_JSON, 'plain'),
-    (FLAT_YML1, FLAT_YML2, PLAIN_YML, 'plain'),
-    (NESTED_JSON1, NESTED_JSON2, PLAIN_NESTED, 'plain'),
-    (NESTED_YML1, NESTED_YML2, PLAIN_NESTED, 'plain'),
-    (FLAT_JSON1, FLAT_JSON2, JSON_FORMAT_JSON, 'json'),
-    (FLAT_YML1, FLAT_YML2, JSON_FORMAT_YML, 'json'),
-    (NESTED_JSON1, NESTED_JSON2, JSON_FORMAT_NESTED, 'json'),
-    (NESTED_YML1, NESTED_YML2, JSON_FORMAT_NESTED, 'json'),
-
+    ('flat1.json', 'flat2.json', 'stylish_format_json.txt', 'stylish'),
+    ('flat1.yml', 'flat2.yml', 'stylish_format_yml.txt', 'stylish'),
+    ('nested1.json', 'nested2.json', 'stylish_format_nested.txt', 'stylish'),
+    ('nested1.yml', 'nested2.yml', 'stylish_format_nested.txt', 'stylish'),
+    ('flat1.json', 'flat2.json', 'plain_format_json.txt', 'plain'),
+    ('flat1.yml', 'flat2.yml', 'plain_format_yml.txt', 'plain'),
+    ('nested1.json', 'nested2.json', 'plain_format_nested.txt', 'plain'),
+    ('nested1.yml', 'nested2.yml', 'plain_format_nested.txt', 'plain'),
+    ('flat1.json', 'flat2.json', 'json_format_json.txt', 'json'),
+    ('flat1.yml', 'flat2.yml', 'json_format_yml.txt', 'json'),
+    ('nested1.json', 'nested2.json', 'json_format_nested.txt', 'json'),
+    ('nested1.yml', 'nested2.yml', 'json_format_nested.txt', 'json'),
 ])
 def test_generate_diff(input1, input2, output, format_):
-    with open(output) as file:
+    file_1 = get_input_path(input1)
+    file_2 = get_input_path(input2)
+    with open(get_output_path(output)) as file:
         expected_diff = file.read()
-    assert generate_diff(input1, input2, format_) == expected_diff
+        assert generate_diff(file_1, file_2, format_) == expected_diff

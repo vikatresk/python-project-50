@@ -24,7 +24,7 @@ def compare_dicts(dict1, dict2):
             diff.append({
                 'status': 'parent',
                 'key': key,
-                'children': compare_dicts(dict1[key], dict2[key])
+                'value': compare_dicts(dict1[key], dict2[key])
             })
         else:
             diff.append({
