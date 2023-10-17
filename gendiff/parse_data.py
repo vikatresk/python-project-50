@@ -3,17 +3,17 @@ import yaml
 import os
 
 
-def load_file(file_path):
+def get_content(file_path):
     with open(file_path) as file:
-        data = file.read()
-        _, extension = os.path.splitext(file_path)
-        return parsing_file(data, extension)
+        content = file.read()
+        _, format = os.path.splitext(file_path)
+        return parse(content, format[1:])
 
 
-def parsing_file(data, extension):
-    if extension in ('.yaml', '.yml'):
-        return yaml.safe_load(data)
-    elif extension == '.json':
-        return json.loads(data)
+def parse(content, format):
+    if format in ('yaml', 'yml'):
+        return yaml.safe_load(content)
+    elif format == 'json':
+        return json.loads(content)
     else:
         raise Exception('Invalid format!')
