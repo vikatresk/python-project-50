@@ -4,16 +4,18 @@ import pytest
 from gendiff.gen_diff import generate_diff
 
 
-INPUT_PATH = os.path.join(f'{dirname(abspath(__file__))}', 'fixtures/input')
-OUTPUT_PATH = os.path.join(f'{dirname(abspath(__file__))}', 'fixtures/output')
+FIXTURE_INPUT_PATH = os.path.join(
+    f'{dirname(abspath(__file__))}', 'fixtures/input')
+FIXTURE_OUTPUT_PATH = os.path.join(
+    f'{dirname(abspath(__file__))}', 'fixtures/output')
 
 
 def get_input_path(file):
-    return os.path.join(INPUT_PATH, file)
+    return os.path.join(FIXTURE_INPUT_PATH, file)
 
 
 def get_output_path(file):
-    return os.path.join(OUTPUT_PATH, file)
+    return os.path.join(FIXTURE_OUTPUT_PATH, file)
 
 
 @pytest.mark.parametrize('input1, input2, output, format_', [

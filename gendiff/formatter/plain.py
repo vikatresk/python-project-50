@@ -30,7 +30,7 @@ def make_diff(current_data, path=''):
 def to_str(value):
     if isinstance(value, dict):
         value = '[complex value]'
-    elif value in (False, True):
+    elif isinstance(value, bool):
         value = str(value).lower()
     elif value is None:
         value = 'null'
